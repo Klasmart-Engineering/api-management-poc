@@ -122,7 +122,7 @@ admin:
   # Disabling this is recommended for most ingress controller configurations
   # Enterprise users that wish to use Kong Manager with the controller should enable this
   enabled: true
-  type: NodePort
+  type: ClusterIP
   # To specify annotations or labels for the admin service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
@@ -158,7 +158,7 @@ admin:
   # API of Kong outside the k8s cluster.
   ingress:
     # Enable/disable exposure using ingress.
-    enabled: true
+    enabled: false
     ingressClassName:
     # TLS secret name.
     # tls: kong-admin.example.com-tls
@@ -752,28 +752,12 @@ serviceMonitor:
 # RBAC and SMTP configuration have additional options that must all be set together
 # Other settings should be added to the "env" settings below
 enterprise:
-  enabled: false
+  enabled: true
   # Kong Enterprise license secret name
   # This secret must contain a single 'license' key, containing your base64-encoded license data
   # The license secret is required to unlock all Enterprise features. If you omit it,
   # Kong will run in free mode, with some Enterprise features disabled.
-  license_secret: >
-    '{
-      "license": {
-        "version": 1,
-        "signature": "f01298b5c7e832ebf843d8bf648045a9fe412126719b48cb1f2ce13e5f95125828b16cfb2f6394155c570f1a2c79017622491e7b5988bbfa799ceb39c895aee2",
-        "payload": {
-          "customer": "kidsloop",
-          "license_creation_date": "2022-03-17",
-          "product_subscription": "Kong Enterprise Subscription",
-          "support_plan": "Platinum",
-          "admin_seats": "10",
-          "dataplanes": "100",
-          "license_expiration_date": "2022-04-07",
-          "license_key": "0011K00002UkXueQAF_a1V1K0000086Ph8UAE"
-        }
-      }
-    }'
+  license_secret: kong-enterprise-license
   vitals:
     enabled: true
   portal:
@@ -814,7 +798,7 @@ enterprise:
 manager:
   # Enable creating a Kubernetes service for Kong Manager
   enabled: true
-  type: NodePort
+  type: ClusterIP
   # To specify annotations or labels for the Manager service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
@@ -853,14 +837,14 @@ manager:
     # Map of ingress annotations.
     annotations: {}
     # Ingress path.
-    path: /
+    path: /manager
     # Each path in an Ingress is required to have a corresponding path type. (ImplementationSpecific/Exact/Prefix)
     pathType: ImplementationSpecific
 
 portal:
   # Enable creating a Kubernetes service for the Developer Portal
   enabled: true
-  type: NodePort
+  type: ClusterIP
   # To specify annotations or labels for the Portal service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
@@ -906,7 +890,7 @@ portal:
 portalapi:
   # Enable creating a Kubernetes service for the Developer Portal API
   enabled: true
-  type: NodePort
+  type: ClusterIP
   # To specify annotations or labels for the Portal API service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
