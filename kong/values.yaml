@@ -122,7 +122,7 @@ admin:
   # Disabling this is recommended for most ingress controller configurations
   # Enterprise users that wish to use Kong Manager with the controller should enable this
   enabled: true
-  type: ClusterIP
+  type: LoadBalancer
   # To specify annotations or labels for the admin service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
@@ -133,7 +133,7 @@ admin:
     # Enable plaintext HTTP listen for the admin API
     # Disabling this and using a TLS listen only is recommended for most configuration
     enabled: true
-    servicePort: 8001
+    servicePort: 80
     containerPort: 8001
     # Set a nodePort which is available if service type is NodePort
     # nodePort: 32080
@@ -143,7 +143,7 @@ admin:
   tls:
     # Enable HTTPS listen for the admin API
     enabled: true
-    servicePort: 8444
+    servicePort: 443
     containerPort: 8444
     # Set a target port for the TLS port in the admin API service, useful when using TLS
     # termination on an ELB.
@@ -798,7 +798,7 @@ enterprise:
 manager:
   # Enable creating a Kubernetes service for Kong Manager
   enabled: true
-  type: ClusterIP
+  type: LoadBalancer
   # To specify annotations or labels for the Manager service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
@@ -808,7 +808,7 @@ manager:
   http:
     # Enable plaintext HTTP listen for Kong Manager
     enabled: true
-    servicePort: 8002
+    servicePort: 80
     containerPort: 8002
     # Set a nodePort which is available if service type is NodePort
     # nodePort: 32080
@@ -818,7 +818,7 @@ manager:
   tls:
     # Enable HTTPS listen for Kong Manager
     enabled: true
-    servicePort: 8445
+    servicePort: 443
     containerPort: 8445
     # Set a nodePort which is available if service type is NodePort
     # nodePort: 32443
@@ -844,7 +844,7 @@ manager:
 portal:
   # Enable creating a Kubernetes service for the Developer Portal
   enabled: true
-  type: ClusterIP
+  type: LoadBalancer
   # To specify annotations or labels for the Portal service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
@@ -890,7 +890,7 @@ portal:
 portalapi:
   # Enable creating a Kubernetes service for the Developer Portal API
   enabled: true
-  type: ClusterIP
+  type: LoadBalancer
   # To specify annotations or labels for the Portal API service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}

@@ -1,19 +1,19 @@
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: kong-manager
-  namespace: kong-istio
-spec:
-  hosts:
-    - kong-istio-kong-manager
-  http:
-    - match:
-        - uri:
-            prefix: /manager
-      route:
-        - destination:
-            host: kong-istio-kong-manager
----
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: kong-manager
+#   namespace: kong-istio
+# spec:
+#   hosts:
+#     - kong-istio-kong-manager
+#   http:
+#     - match:
+#         - uri:
+#             prefix: /manager
+#       route:
+#         - destination:
+#             host: kong-istio-kong-manager
+# ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -31,22 +31,22 @@ spec:
                 name: kong-istio-kong-manager
                 port:
                   number: 8002
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: kong-admin
-  namespace: kong-istio
-spec:
-  hosts:
-    - kong-istio-kong-admin
-  http:
-    - match:
-        - uri:
-            prefix: /admin
-      route:
-        - destination:
-            host: kong-istio-kong-admin
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: kong-admin
+#   namespace: kong-istio
+# spec:
+#   hosts:
+#     - kong-istio-kong-admin
+#   http:
+#     - match:
+#         - uri:
+#             prefix: /admin
+#       route:
+#         - destination:
+#             host: kong-istio-kong-admin
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
