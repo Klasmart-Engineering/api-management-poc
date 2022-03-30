@@ -1,0 +1,43 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: kong-gateway
+  namespace: kong-istio
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: kong-gateway
+  namespace: kong-istio
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - kong-gateway
+  exportTo:
+    - "istio-system"
+  http:
+  - route:
+    - destination:
+        port:
+          number: 80
+        host: kong-istio-kong-proxy
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "PeerAuthentication"
+metadata:
+  name: "turn-off-mtls"
+  namespace: "istio-system"
+spec:
+  mtls:
+    mode: DISABLE

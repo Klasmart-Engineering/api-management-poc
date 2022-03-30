@@ -219,7 +219,7 @@ cluster:
 proxy:
   # Enable creating a Kubernetes service for the proxy
   enabled: true
-  type: LoadBalancer
+  type: ClusterIP
   # To specify annotations or labels for the proxy service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
@@ -231,6 +231,7 @@ proxy:
   # "service.beta.kubernetes.io/aws-load-balancer-type": "elb"
   labels:
     enable-metrics: "true"
+    app: "edge-gateway"
 
   http:
     # Enable plaintext HTTP listen for the proxy
@@ -408,6 +409,65 @@ dblessConfig:
   config: |
     _format_version: "1.1"
     services:
+    - connect_timeout: 60000
+      host: productpage.bookinfo.svc
+      name: bookinfo.productpage.pnum-9080
+      path: /
+      port: 9080
+      protocol: http
+      read_timeout: 60000
+      retries: 5
+      routes:
+      - https_redirect_status_code: 426
+        name: bookinfo.productpage.00
+        path_handling: v0
+        paths:
+        - /productpage
+        preserve_host: true
+        protocols:
+        - http
+        - https
+        regex_priority: 100
+        request_buffering: true
+        response_buffering: true
+        strip_path: true
+      write_timeout: 60000
+    - connect_timeout: 60000
+      host: frontend-external.boutique.svc
+      name: boutique.frontend-external.pnum-80
+      path: /
+      port: 80
+      protocol: http
+      read_timeout: 60000
+      retries: 5
+      routes:
+      - https_redirect_status_code: 426
+        name: boutique.boutique-frontend-static.00
+        path_handling: v0
+        paths:
+        - /static/?(.*)
+        preserve_host: true
+        protocols:
+        - http
+        - https
+        regex_priority: 100
+        request_buffering: true
+        response_buffering: true
+        strip_path: false
+      - https_redirect_status_code: 426
+        name: boutique.boutique-frontend.00
+        path_handling: v0
+        paths:
+        - /boutique
+        preserve_host: true
+        protocols:
+        - http
+        - https
+        regex_priority: 100
+        request_buffering: true
+        response_buffering: true
+        strip_path: true
+      write_timeout: 60000
       # Example configuration
       # - name: example.com
       #   url: http://example.com
@@ -430,7 +490,7 @@ dblessConfig:
 # created in k8s.  It uses CRDs for more fine grained control over routing and
 # for Kong specific configuration.
 ingressController:
-  enabled: true
+  enabled: false
   image:
     repository: kong/kubernetes-ingress-controller
     tag: "2.2"

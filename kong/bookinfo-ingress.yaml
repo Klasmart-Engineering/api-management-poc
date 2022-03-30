@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: productpage
   namespace: bookinfo
+  annotations:
+    konghq.com/strip-path: "true"
 spec:
   ingressClassName: kong
   rules:
@@ -15,43 +17,11 @@ spec:
                 name: productpage
                 port:
                   number: 9080
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: productpage-static
-#   namespace: bookinfo
-# spec:
-#   ingressClassName: kong
-#   rules:
-#     - http:
-#         paths:
-#           - path: /static/?(*.)
-#             pathType: ImplementationSpecific
-#             backend:
-#               service:
-#                 name: productpage
-#                 port:
-#                   number: 9080
-# - path: /static/jquery.min.js
-#   pathType: Exact
-#   backend:
-#     service:
-#       name: productpage
-#       port:
-#         number: 9080
-# - path: /static/bootstrap/?(*.)
-#   pathType: Prefix
-#   backend:
-#     service:
-#       name: productpage
-#       port:
-#         number: 9080
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: frontend
+  name: boutique-frontend
   namespace: boutique
   annotations:
     konghq.com/strip-path: "true"
@@ -64,38 +34,24 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: frontend
+                name: frontend-external
                 port:
                   number: 80
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: frontend-static
-#   namespace: boutique
-# spec:
-#   ingressClassName: kong
-#   rules:
-#     - http:
-#         paths:
-#           - path: /static/styles/?(*.)
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: frontend
-#                 port:
-#                   number: 80
-#           - path: /static/icons/?(*.)
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: frontend
-#                 port:
-#                   number: 80
-#           - path: /static/img/?(*.)
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: frontend
-#                 port:
-#                   number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: boutique-frontend-static
+  namespace: boutique
+spec:
+  ingressClassName: kong
+  rules:
+    - http:
+        paths:
+          - path: /static/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: frontend-external
+                port:
+                  number: 80
