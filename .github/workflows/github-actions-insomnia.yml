@@ -21,8 +21,8 @@ jobs:
         with:
           name: newApi-Kong.yaml
           path: newApi-Kong.yaml
-  Kong:
-    name: Sync with Kong
+  Kong-Diff:
+    name: Diff with Kong
     needs: Insomnia
     runs-on: ubuntu-latest
     steps:
@@ -34,5 +34,19 @@ jobs:
         with:
           name: newApi-Kong.yaml
       - run: deck --headers "kong-admin-token:${{ secrets.KONG_ADMIN_TOKEN }}" --kong-addr http://admin.kong-poc.kidsloop.live -s newApi-Kong.yaml --select-tag newApi diff
+
+  Kong-Sync:
+    name: Diff with Kong
+    needs: Insomnia
+    runs-on: ubuntu-latest
+    if: github.ref == refs/heads/main
+    steps:
+      - uses: kong/setup-deck@v1
+        with:
+          deck-version: 1.7.0
+      - run: deck version
+      - uses: actions/download-artifact@v3
+        with:
+          name: newApi-Kong.yaml
       - run: deck --headers "kong-admin-token:${{ secrets.KONG_ADMIN_TOKEN }}" --kong-addr http://admin.kong-poc.kidsloop.live -s newApi-Kong.yaml --select-tag newApi sync
 
