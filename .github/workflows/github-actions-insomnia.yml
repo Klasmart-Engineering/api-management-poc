@@ -1,0 +1,19 @@
+# .github/workflows/test.yml
+
+name: Test Insomnia
+on: [push]
+
+jobs:
+  Linux:
+    name: Validate API spec
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v1
+      - uses: kong/setup-inso@v1
+        with:
+          inso-version: 2.4.0
+      - name: Lint
+        run: inso lint spec open-api/newApi.yaml --ci
+      - name: Generate declarative config
+        run: inso generate config open-api/newApi.yaml --output newApi-Kong.yaml --tags newApi --type declarative --ci
