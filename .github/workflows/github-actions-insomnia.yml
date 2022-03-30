@@ -1,0 +1,52 @@
+# .github/workflows/test.yml
+
+name: Test Insomnia
+on: [push]
+
+jobs:
+  Insomnia:
+    name: Validate API spec
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v1
+      - uses: kong/setup-inso@v1
+        with:
+          inso-version: 2.4.0
+      - name: Lint
+        run: inso lint spec open-api/newApi.yaml --ci
+      - name: Generate declarative config
+        run: inso generate config open-api/newApi.yaml --output newApi-Kong.yaml --tags newApi --type declarative --ci
+      - uses: actions/upload-artifact@v3
+        with:
+          name: newApi-Kong.yaml
+          path: newApi-Kong.yaml
+  Kong-Diff:
+    name: Diff with Kong
+    needs: Insomnia
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kong/setup-deck@v1
+        with:
+          deck-version: 1.7.0
+      - run: deck version
+      - uses: actions/download-artifact@v3
+        with:
+          name: newApi-Kong.yaml
+      - run: deck --headers "kong-admin-token:${{ secrets.KONG_ADMIN_TOKEN }}" --kong-addr http://admin.kong-poc.kidsloop.live -s newApi-Kong.yaml --select-tag newApi diff
+
+  Kong-Sync:
+    name: Sync with Kong
+    needs: Kong-Diff
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: kong/setup-deck@v1
+        with:
+          deck-version: 1.7.0
+      - run: deck version
+      - uses: actions/download-artifact@v3
+        with:
+          name: newApi-Kong.yaml
+      - run: deck --headers "kong-admin-token:${{ secrets.KONG_ADMIN_TOKEN }}" --kong-addr http://admin.kong-poc.kidsloop.live -s newApi-Kong.yaml --select-tag newApi sync
+
