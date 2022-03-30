@@ -32,5 +32,6 @@ jobs:
       - run: deck version
       - uses: actions/download-artifact@v3
         with:
-          name: my-artifact
+          name: newApi-Kong.yaml
+      - run: deck --headers "kong-admin-token:${{ secrets.KONG_ADMIN_TOKEN }}" --kong-addr http://admin.kong-poc.kidsloop.live -s newApi-Kong.yaml --select-tag newApi diff
 
