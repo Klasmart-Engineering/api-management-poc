@@ -36,8 +36,8 @@ jobs:
       - run: deck --headers "kong-admin-token:${{ secrets.KONG_ADMIN_TOKEN }}" --kong-addr http://admin.kong-poc.kidsloop.live -s newApi-Kong.yaml --select-tag newApi diff
 
   Kong-Sync:
-    name: Diff with Kong
-    needs: Insomnia
+    name: Sync with Kong
+    needs: Kong-Diff
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
