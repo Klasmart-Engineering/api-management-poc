@@ -39,7 +39,7 @@ jobs:
     name: Diff with Kong
     needs: Insomnia
     runs-on: ubuntu-latest
-    if: github.ref == refs/heads/main
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: kong/setup-deck@v1
         with:
