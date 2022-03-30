@@ -26,12 +26,12 @@ jobs:
     needs: Insomnia
     depends-on: 
     runs-on: ubuntu-latest
-      steps:
-        - uses: kong/setup-deck@v1
-          with:
-            deck-version: 1.7.0
-        - run: deck version
-        - uses: actions/download-artifact@v3
-          with:
-            name: my-artifact
+    steps:
+      - uses: kong/setup-deck@v1
+        with:
+          deck-version: 1.7.0
+      - run: deck version
+      - uses: actions/download-artifact@v3
+        with:
+          name: my-artifact
 
