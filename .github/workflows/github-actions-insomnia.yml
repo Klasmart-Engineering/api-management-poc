@@ -4,7 +4,7 @@ name: Test Insomnia
 on: [push]
 
 jobs:
-  Linux:
+  Insomnia:
     name: Validate API spec
     runs-on: ubuntu-latest
     steps:
@@ -17,3 +17,21 @@ jobs:
         run: inso lint spec open-api/newApi.yaml --ci
       - name: Generate declarative config
         run: inso generate config open-api/newApi.yaml --output newApi-Kong.yaml --tags newApi --type declarative --ci
+      - uses: actions/upload-artifact@v3
+        with:
+          name: newApi-Kong.yaml
+          path: newApi-Kong.yaml
+  Kong:
+    name: Sync with Kong
+    needs: Insomnia
+    depends-on: 
+    runs-on: ubuntu-latest
+      steps:
+        - uses: kong/setup-deck@v1
+          with:
+            deck-version: 1.7.0
+        - run: deck version
+        - uses: actions/download-artifact@v3
+          with:
+            name: my-artifact
+
