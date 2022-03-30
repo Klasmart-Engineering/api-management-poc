@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  title: New api
+  description: My api description
+  version: 0.1.0
+servers:
+  - url: http://proxy.kong-poc.kidsloop.live
+    description: server used for kong poc
+paths:
+  "/users":
+    get:
+      tags: ["users"]
+      summary: Returns all users
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+
+    post:
+      tags: ["users"]
+      summary: Create a new user
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: "#/components/schemas/user"
+        required: true
+      responses:
+        "200":
+          description: user created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+    
+  "/users/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: the id of the user
+      required: true
+      schema:
+        type: number
+    get:
+      tags: ["users"]
+      summary: Returns the specific user
+      responses:
+        "200":
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "404":
+          $ref: "#/components/responses/not_found"
+
+    delete:
+      tags: ["users"]
+      summary: Deletes the specific user
+      responses:
+        "200":
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "401":
+          $ref: "#/components/responses/unauthorized"
+        "404":
+          $ref: "#/components/responses/not_found"
+
+components:
+  responses:
+    unauthorized:
+      description: Unauthorised
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: {}
+
+    not_found:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: {}
+  schemas:
+    user:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Internal user id
+        username:
+          type: string
+          description: the username of the user
+        name:
+          type: string
+          description: the name of the user
+    error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: an error code for easy tracking of the error
+        message:
+          type: string
+          description: A user friendly message that can be displayed to an end user.
