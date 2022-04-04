@@ -10,17 +10,17 @@ helm upgrade -n kong-istio kong-istio kong/kong -f kong/values.yaml
 ```
 
 ### K3D Local Cluster Setup
-Install K3D to run a local cluster.
+Install K3D to run a local cluster.    
 Install Istio onto your machine.
 ```
-k3d cluster create local-cluster
+k3d cluster create local-cluster    
 
-istioctl install --set profile=demo -y
-kubectl label namespace default istio-injection=enabled
-k create ns edge
-k create ns opa-authorisation
-kubectl label namespace edge istio-injection=enabled
-kubectl label namespace opa-authorisation istio-injection=enabled
+istioctl install --set profile=demo -y    
+kubectl label namespace default istio-injection=enabled     
+k create ns edge    
+k create ns opa-authorisation     
+kubectl label namespace edge istio-injection=enabled     
+kubectl label namespace opa-authorisation istio-injection=enabled     
 ```
 
 Update the istio-ingressgateway.yaml to use your new namespaces. A find-replace of 'istio-kong' for 'edge' should do it if the file stays as it is now :)
@@ -74,17 +74,17 @@ spec:
 ```
 Nb. a good way of jumping between namespaces is to install kubens
 ```
-kubens
-cd kong
-helm repo add kong https://charts.konghq.com
-helm install -n edge edge kong/kong -f values.yaml
-k get svc
-k apply -f istio-ingressgateway.yaml
-helm upgrade -n edge edge kong/kong -f values.yaml
-k get svc
-helm install -n opa-authorisation opa kong/kong -f opa-values.yaml
-helm upgrade -n edge edge kong/kong -f values.yaml
-helm upgrade -n opa-authorisation opa kong/kong -f opa-values.yaml
+kubens     
+cd kong    
+helm repo add kong https://charts.konghq.com      
+helm install -n edge edge kong/kong -f values.yaml     
+k get svc      
+k apply -f istio-ingressgateway.yaml     
+helm upgrade -n edge edge kong/kong -f values.yaml      
+k get svc      
+helm install -n opa-authorisation opa kong/kong -f opa-values.yaml     
+helm upgrade -n edge edge kong/kong -f values.yaml     
+helm upgrade -n opa-authorisation opa kong/kong -f opa-values.yaml     
 ```
 
 Install Lens for a shortcut for port forwarding out of your cluster.
