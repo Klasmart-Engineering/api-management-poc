@@ -1,0 +1,36 @@
+{
+  "$schema": "https://www.krakend.io/schema/v3.json",
+  "version": 3,
+  "extra_config": {
+    "telemetry/logging": {
+      "level": "INFO",
+      "prefix": "[KRAKEND]",
+      "syslog": false,
+      "stdout": true,
+      "format": "default"
+    }
+  },
+  "timeout": "3000ms",
+  "cache_ttl": "300s",
+  "output_encoding": "json",
+  "name": "krakend",
+  "port": 443,
+  "endpoints": [
+    {
+      "endpoint": "/v1/starwars",
+      "method": "GET",
+      "output_encoding": "json",
+      "extra_config": {},
+      "backend": [
+        {
+          "url_pattern": "api/people/1",
+          "encoding": "json",
+          "method": "GET",
+          "extra_config": {},
+          "host": ["https://swapi.dev"],
+          "disable_host_sanitize": false
+        }
+      ]
+    }
+  ]
+}
