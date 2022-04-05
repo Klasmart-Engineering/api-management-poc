@@ -82,6 +82,12 @@ env:
   admin_gui_error_log: /dev/stderr
   portal_api_error_log: /dev/stderr
   prefix: /kong_prefix/
+  go_plugins_dir: /usr/local/bin/go-plugins
+  plugins: "bundled,simple-plugin"
+  pluginserver_names: 'simple-plugin'
+  pluginserver_simple_plugin_query_cmd: "/usr/local/bin/go-plugins/simple-plugin --dump"
+  pluginserver_simple_plugin_start_cmd: "/usr/local/bin/go-plugins/simple-plugin"
+  pluginserver_simple_plugin_socket: "/usr/local/kong/simple-plugin.socket"
 
 # This section is any customer specific environments variables that doesn't require KONG_ prefix.
 # These custom environment variables are typicall used in custom plugins or serverless plugins to
@@ -104,8 +110,10 @@ image:
   # repository: kong
   # tag: "2.8"
   # Kong Enterprise
-  repository: kong/kong-gateway
-  tag: "2.8"
+  # repository: kong/kong-gateway
+  # tag: "2.8"
+  repository: 246958245973.dkr.ecr.eu-west-2.amazonaws.com/kong-poc
+  tag: "1.0.3"
 
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
@@ -432,6 +440,10 @@ dblessConfig:
         response_buffering: true
         strip_path: true
       write_timeout: 60000
+      plugins:
+        - name: simple-plugin
+          config:
+            message: "from yaml"
     - connect_timeout: 60000
       host: frontend-external.boutique.svc
       name: boutique.frontend-external.pnum-80
