@@ -1,3 +1,4 @@
 license
 .envrc
 .DS_Store
+*.so

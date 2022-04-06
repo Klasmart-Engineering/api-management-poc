@@ -1,0 +1,6 @@
+github.com/devopsfaith/flatmap v0.0.0-20200601181759-8521186182fc h1:WM1VdC8LW8GIZUJuvXgQWm6LcZ8niL0D0WVuC3lKkQU=
+github.com/devopsfaith/flatmap v0.0.0-20200601181759-8521186182fc/go.mod h1:J9Y/58s7wx7HbHT3i4UKNwLGuBB9qCf0/JUdEFGDPmA=
+github.com/luraproject/lura/v2 v2.0.1 h1:RPnKnBsY2XRdiicFUjUd11SBPJEW+bIL8E3Bd4cKfHA=
+github.com/luraproject/lura/v2 v2.0.1/go.mod h1:1FhL+5a9uH6o7zMNstXlcjznL5yt2lZ9Q8efanmvw9w=
+github.com/valyala/fastrand v1.1.0 h1:f+5HkLW4rsgzdNoleUOB69hyT9IlD2ZQh9GyDMfb5G8=
+github.com/valyala/fastrand v1.1.0/go.mod h1:HWqCzkrkg6QXT8V2EXWvXCoow7vLwOFN002oeRzjapQ=
