@@ -17,7 +17,7 @@
   "port": 443,
   "endpoints": [
     {
-      "endpoint": "/v1/starwars/{person_number}",
+      "endpoint": "/starwars/{person_number}",
       "method": "GET",
       "output_encoding": "json",
       "extra_config": {
@@ -35,6 +35,20 @@
           "extra_config": {},
           "host": ["https://swapi.dev"],
           "disable_host_sanitize": false
+        }
+      ]
+    },
+    {
+      "endpoint": "/github/user/{userId}",
+      "method": "GET",
+      "extra_config": {},
+      "output_encoding": "json",
+      "concurrent_calls": 1,
+      "backend": [
+        {
+          "method": "GET",
+          "host": ["https://api.github.com"],
+          "url_pattern": "/users/{userId}"
         }
       ]
     }
