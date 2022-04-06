@@ -9,8 +9,6 @@ import (
 	"github.com/luraproject/lura/v2/proxy"
 )
 
-func main() {}
-
 func init() {
 	fmt.Println(string(ModifierRegisterer), "loaded!!!")
 }
