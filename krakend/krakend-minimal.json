@@ -1,0 +1,23 @@
+{
+  "$schema": "https://www.krakend.io/schema/v3.json",
+  "version": 2,
+  "endpoints": [
+    {
+      "endpoint": "/starwars/{person_number}",
+      "method": "GET",
+      "output_encoding": "json",
+      "extra_config": {},
+      "backend": [
+        {
+          "url_pattern": "api/people/{person_number}",
+          "encoding": "json",
+          "method": "GET",
+          "extra_config": {},
+          "host": ["https://swapi.dev"],
+          "disable_host_sanitize": false
+        }
+      ]
+    }
+  ],
+  "extra_config": {}
+}

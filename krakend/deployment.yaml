@@ -15,12 +15,11 @@ spec:
     spec:
       containers:
       - name: krakend
-        image: 246958245973.dkr.ecr.eu-west-2.amazonaws.com/krakend:0.0.14
         ports:
         - containerPort: 8080
-        image: 246958245973.dkr.ecr.eu-west-2.amazonaws.com/krakend:0.0.14
-        command: [ "/usr/bin/krakend" ]
-        args: [ "run", "-d", "-c", "/etc/krakend/krakend.json", "-p", "8080" ]
+        image: 246958245973.dkr.ecr.eu-west-2.amazonaws.com/krakend-enterprise:0.0.17
+        command: [ "/usr/bin/krakend-ee" ]
+        args: [ "run", "-d", "-c", "/etc/krakend/krakend.json", "--accept-eula" , "-p", "8080" ]
         env:
         - name: KRAKEND_PORT
           value: "8080"

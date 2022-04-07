@@ -11,7 +11,7 @@ WORKDIR /tmp/builder/plugin
 
 RUN go build -buildmode=plugin -o krakend-debugger.so .
 
-FROM devopsfaith/krakend as krakend
+FROM 246958245973.dkr.ecr.eu-west-2.amazonaws.com/krakend-enterprise:kidsloop as krakend
 
 USER root
 
@@ -24,8 +24,7 @@ ENV FC_SETTINGS=/etc/krakend/config/settings/${ENV:-dev}
 ENV FC_PARTIALS=/etc/krakend/config/partials
 ENV FC_TEMPLATES=/etc/krakend/config/templates
 
-RUN mkdir -p /etc/krakend/plugins
-COPY  --from=builder /tmp/builder/plugin/krakend-debugger.so /etc/krakend/plugins/krakend-debugger.so
-RUN chmod +x /etc/krakend/plugins/*.so
+COPY  --from=builder /tmp/builder/plugin/krakend-debugger.so /opt/krakend/plugins/krakend-debugger.so
+RUN chmod +x /opt/krakend/plugins/*.so
 
 USER krakend

@@ -1,6 +1,6 @@
 {
   "$schema": "https://www.krakend.io/schema/v3.json",
-  "version": 3,
+  "version": 2,
   "extra_config": {
     "telemetry/logging": {
       "level": "DEBUG",
@@ -12,7 +12,7 @@
   },
   "plugin": {
     "pattern": ".so",
-    "folder": "/etc/krakend/plugins/"
+    "folder": "/opt/krakend/plugins/"
   },
   "timeout": "3000ms",
   "cache_ttl": "300s",
@@ -54,6 +54,20 @@
           "method": "GET",
           "host": ["https://api.github.com"],
           "url_pattern": "/users/{userId}"
+        }
+      ]
+    },
+    {
+      "endpoint": "/products/{id}",
+      "method": "GET",
+      "extra_config": {},
+      "output_encoding": "json",
+      "concurrent_calls": 1,
+      "backend": [
+        {
+          "method": "GET",
+          "host": ["details.bookinfo.svc:9080"],
+          "url_pattern": "/details/{id}"
         }
       ]
     }
