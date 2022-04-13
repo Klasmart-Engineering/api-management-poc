@@ -13,7 +13,8 @@
       "name": [ "krakend-wildcard" ],
       "krakend-wildcard": {
         "endpoints": {
-          "/__wildcard/starwars": [ "/sw" ]
+          "/__wildcard/starwars": [ "/sw" ],
+          "/__wildcard/productpage": [ "/productpage" ]
         }
       }
     }
@@ -88,6 +89,25 @@
           "url_pattern": "api",
           "encoding": "json",
           "host": ["https://swapi.dev"],
+          "disable_host_sanitize": false,
+          "extra_config": {
+            "github.com/devopsfaith/krakend/transport/http/client/executor": {
+                "name": "krakend-wildcard"
+              }
+          }
+        }
+      ]
+    },
+    {
+      "endpoint": "/__wildcard/productpage",
+      "headers_to_pass": [ "X-Krakend-Wildcard" ],
+      "concurrent_calls": 1,
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "encoding": "no-op",
+          "url_pattern": "",
+          "host": ["productpage.bookinfo.svc:9080"],
           "disable_host_sanitize": false,
           "extra_config": {
             "github.com/devopsfaith/krakend/transport/http/client/executor": {
