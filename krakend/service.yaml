@@ -12,3 +12,18 @@ spec:
     protocol: TCP
   selector:
     app: krakend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: krakend-stats
+  namespace: krakend
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8090
+    protocol: TCP
+  selector:
+    app: krakend

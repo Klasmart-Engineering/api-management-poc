@@ -9,12 +9,20 @@
       "stdout": true,
       "format": "default"
     },
+    "github_com/devopsfaith/krakend-metrics": {
+      "collection_time": "60s",
+      "proxy_disabled": false,
+      "router_disabled": false,
+      "backend_disabled": false,
+      "endpoint_disabled": false,
+      "listen_address": ":8090"
+    },
     "github_com/devopsfaith/krakend/transport/http/server/handler": {
       "name": [ "krakend-wildcard" ],
       "krakend-wildcard": {
         "endpoints": {
           "/__wildcard/starwars": [ "/sw" ],
-          "/__wildcard/productpage": [ "/productpage" ]
+          "/__wildcard/productpage": [ "/bookinfo" ]
         }
       }
     }
@@ -114,6 +122,52 @@
                 "name": "krakend-wildcard"
               }
           }
+        }
+      ]
+    },
+     {
+      "endpoint": "/default-behavior",
+      "backend": [
+        {
+          "url_pattern": "/__debug/default"
+        }
+      ]
+    },
+    {
+      "endpoint": "/optional-params",
+      "querystring_params": [
+          "a",
+          "b"
+        ],
+      "headers_to_pass": [
+          "User-Agent",
+          "Accept"
+        ],
+      "backend": [
+        {
+          "url_pattern": "/__debug/optional"
+        }
+      ]
+    },
+    {
+      "endpoint": "/mandatory/{variable}",
+      "backend": [
+        {
+          "url_pattern": "/__debug/qs?mandatory={variable}"
+        }
+      ]
+    },
+    {
+      "endpoint": "/stats",
+      "method": "GET",
+      "extra_config": {},
+      "output_encoding": "json",
+      "concurrent_calls": 1,
+      "backend": [
+        {
+          "method": "GET",
+          "host": ["krakend-stats.krakend.svc"],
+          "url_pattern": "/__stats"
         }
       ]
     }
