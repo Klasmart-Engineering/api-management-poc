@@ -1,0 +1,168 @@
+{
+	"variables": [
+		{
+			"id": "3767ac7a-4a2a-4697-84fd-c17a1cc07249",
+			"key": "HOST",
+			"value": "localhost:443",
+			"type": "string"
+		},
+		{
+			"id": "59c35300-d688-4a2f-acd7-8932d78cbc6b",
+			"key": "SCHEMA",
+			"value": "http",
+			"type": "string"
+		}
+	],
+	"info": {
+		"name": "krakend",
+		"_postman_id": "a777c1d9-e0f2-462b-b7be-7b8601a09af9",
+		"description": "collection parsed at 2022-04-14 13:54:12.532902045 +0000 UTC m=+0.591278085",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/starwars/:person_number",
+			"request": {
+				"url": {
+					"raw": "{{SCHEMA}}://{{HOST}}/starwars/:person_number",
+					"protocol": "{{SCHEMA}}",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"starwars/:person_number"
+					]
+				},
+				"method": "GET"
+			}
+		},
+		{
+			"name": "/github/user/:userId",
+			"request": {
+				"url": {
+					"raw": "{{SCHEMA}}://{{HOST}}/github/user/:userId",
+					"protocol": "{{SCHEMA}}",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"github/user/:userId"
+					]
+				},
+				"method": "GET"
+			}
+		},
+		{
+			"name": "/products/:id",
+			"request": {
+				"url": {
+					"raw": "{{SCHEMA}}://{{HOST}}/products/:id",
+					"protocol": "{{SCHEMA}}",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"products/:id"
+					]
+				},
+				"method": "GET"
+			}
+		},
+		{
+			"name": "/__wildcard/starwars",
+			"request": {
+				"url": {
+					"raw": "{{SCHEMA}}://{{HOST}}/__wildcard/starwars",
+					"protocol": "{{SCHEMA}}",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"__wildcard/starwars"
+					]
+				},
+				"method": "GET"
+			}
+		},
+		{
+			"name": "/__wildcard/productpage",
+			"request": {
+				"url": {
+					"raw": "{{SCHEMA}}://{{HOST}}/__wildcard/productpage",
+					"protocol": "{{SCHEMA}}",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"__wildcard/productpage"
+					]
+				},
+				"method": "GET"
+			}
+		},
+		{
+			"name": "/default-behavior",
+			"request": {
+				"url": {
+					"raw": "{{SCHEMA}}://{{HOST}}/default-behavior",
+					"protocol": "{{SCHEMA}}",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"default-behavior"
+					]
+				},
+				"method": "GET"
+			}
+		},
+		{
+			"name": "/optional-params",
+			"request": {
+				"url": {
+					"raw": "{{SCHEMA}}://{{HOST}}/optional-params",
+					"protocol": "{{SCHEMA}}",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"optional-params"
+					]
+				},
+				"method": "GET"
+			}
+		},
+		{
+			"name": "/mandatory/:variable",
+			"request": {
+				"url": {
+					"raw": "{{SCHEMA}}://{{HOST}}/mandatory/:variable",
+					"protocol": "{{SCHEMA}}",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"mandatory/:variable"
+					]
+				},
+				"method": "GET"
+			}
+		},
+		{
+			"name": "/stats",
+			"request": {
+				"url": {
+					"raw": "{{SCHEMA}}://{{HOST}}/stats",
+					"protocol": "{{SCHEMA}}",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"stats"
+					]
+				},
+				"method": "GET"
+			}
+		}
+	]
+}

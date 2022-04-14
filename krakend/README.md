@@ -17,3 +17,10 @@ aws ecr get-login-password --region eu-west-2 | docker login --username AWS --pa
 4. `docker push 246958245973.dkr.ecr.eu-west-2.amazonaws.com/krakend:<image version number>`
 5. Edit `krakend/deployment.yaml` to point at the latest version tag
 6. `kubectl apply -f deployment.yaml`
+
+To generate the output, complete configfile, postman.json, openapi.json & dot file you can run these commands from this directory: 
+``` sh
+docker build -f Dockerfile.generate -t krakend_generate .
+docker run -v "$(pwd)/output":/tmp krakend_generate
+```
+That will copy the generated files into the output directory.

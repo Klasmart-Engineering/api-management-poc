@@ -1,0 +1,25 @@
+FROM 246958245973.dkr.ecr.eu-west-2.amazonaws.com/krakend-enterprise:kidsloop as krakend
+
+USER root
+
+RUN apt-get update
+
+RUN apt -y install graphviz
+
+ENV FC_ENABLE=1
+ENV FC_SETTINGS=/etc/krakend/config/settings/${ENV:-dev}
+ENV FC_PARTIALS=/etc/krakend/config/partials
+ENV FC_TEMPLATES=/etc/krakend/config/templates
+ENV FC_OUT=/etc/krakend/output/krakend.json
+
+RUN mkdir /etc/krakend/config
+COPY config/ /etc/krakend/config/
+COPY krakend.openapi.json /etc/krakend/krakend.json
+
+RUN mkdir /etc/krakend/output
+RUN /usr/bin/krakend-ee check -c  /etc/krakend/krakend.json 
+RUN /usr/bin/krakend-ee generate openapi -c /etc/krakend/output/krakend.json -o /etc/krakend/output/openapi.json
+RUN /usr/bin/krakend-ee generate config2dot -c /etc/krakend/output/krakend.json -o /etc/krakend/output/krakend.png
+RUN /usr/bin/krakend-ee generate postman -c /etc/krakend/output/krakend.json -o /etc/krakend/output/postman.json
+
+ENTRYPOINT ["cp", "-r", "/etc/krakend/output/.", "/tmp"]
