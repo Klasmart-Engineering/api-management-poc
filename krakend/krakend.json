@@ -61,16 +61,22 @@
     {
       "endpoint": "/github/user/{userId}",
       "method": "GET",
-      "extra_config": {
-        {{ template "jwks-validation-plugin.tmpl" .auth }}
-      },
+      "extra_config": {},
       "output_encoding": "json",
-      "concurrent_calls": 1,
       "backend": [
         {
           "method": "GET",
           "host": ["https://api.github.com"],
           "url_pattern": "/users/{userId}"
+        },
+        {
+          "method": "GET",
+          "host": ["https://api.github.com"],
+          "url_pattern": "/users/{userId}/repos",
+          "is_collection": true,
+          "mapping": {
+            "collection": "repo_details"
+          }
         }
       ]
     },
