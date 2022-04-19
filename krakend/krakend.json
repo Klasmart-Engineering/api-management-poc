@@ -9,6 +9,9 @@
       "stdout": true,
       "format": "default"
     },
+    "router": {
+      "return_error_msg": true
+    },
     "github_com/devopsfaith/krakend-metrics": {
       "collection_time": "60s",
       "proxy_disabled": false,
@@ -174,6 +177,20 @@
           "method": "GET",
           "host": ["krakend-stats.krakend.svc"],
           "url_pattern": "/__stats"
+        }
+      ]
+    },
+    {
+      "endpoint": "/",
+      "headers_to_pass": ["*"],
+      "method": "POST",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "method": "POST",
+          "host": ["helloworld.bookinfo.svc"],
+          "encoding": "no-op",
+          "url_pattern": ""
         }
       ]
     }

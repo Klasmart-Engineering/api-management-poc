@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld
+  labels:
+    app: helloworld
+    service: helloworld
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      name: tcp
+      targetPort: 50051
+  selector:
+    app: helloworld
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: helloworld-acc
+  labels:
+    account: helloworld
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld
+  labels:
+    app: helloworld 
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloworld
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: helloworld
+        version: v1
+    spec:
+      serviceAccountName: helloworld-acc
+      containers:
+      - name: helloworld
+        image: 246958245973.dkr.ecr.eu-west-2.amazonaws.com/krakend-enterprise:helloworld
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 50051
+        securityContext:
+          runAsUser: 1000
+---
