@@ -9,9 +9,6 @@
       "stdout": true,
       "format": "default"
     },
-    "router": {
-      "return_error_msg": true
-    },
     "github_com/devopsfaith/krakend-metrics": {
       "collection_time": "60s",
       "proxy_disabled": false,
@@ -134,38 +131,6 @@
         }
       ]
     },
-     {
-      "endpoint": "/default-behavior",
-      "backend": [
-        {
-          "url_pattern": "/__debug/default"
-        }
-      ]
-    },
-    {
-      "endpoint": "/optional-params",
-      "querystring_params": [
-          "a",
-          "b"
-        ],
-      "headers_to_pass": [
-          "User-Agent",
-          "Accept"
-        ],
-      "backend": [
-        {
-          "url_pattern": "/__debug/optional"
-        }
-      ]
-    },
-    {
-      "endpoint": "/mandatory/{variable}",
-      "backend": [
-        {
-          "url_pattern": "/__debug/qs?mandatory={variable}"
-        }
-      ]
-    },
     {
       "endpoint": "/stats",
       "method": "GET",
@@ -181,18 +146,86 @@
       ]
     },
     {
-      "endpoint": "/",
-      "headers_to_pass": ["*"],
+      "endpoint": "/graphql",
       "method": "POST",
-      "output_encoding": "no-op",
+      "output_encoding": "json",
       "backend": [
         {
           "method": "POST",
-          "host": ["helloworld.bookinfo.svc"],
-          "encoding": "no-op",
-          "url_pattern": ""
+          "host": ["fruits-api.netlify.app"],
+          "url_pattern": "/graphql"
         }
       ]
+    },
+    {
+      "endpoint": "/sequential/{id}",
+      "method": "get",
+      "output_encoding": "json",
+      "extra_config": {
+          "github.com/devopsfaith/krakend/proxy": {
+              "sequential": true
+          }
+      },
+      "backend": [
+        {
+          "method": "GET",
+          "host": ["https://jsonplaceholder.typicode.com"],
+          "url_pattern": "/posts/{id}",
+          "mapping": {
+            "id": "postId"
+          }
+        },
+        {
+          "method": "GET",
+          "host": ["https://jsonplaceholder.typicode.com"],
+          "url_pattern": "/users/{resp0_userId}",
+          "deny": [
+            "phone"
+          ],
+          "mapping": {
+            "id": "userId"
+          }
+        }
+      ]
+    },
+    {
+      "endpoint": "/rate-limit",
+      "backend": [
+        {
+          "host": ["https://api.spacexdata.com"],
+          "url_pattern": "/v4/launches/latest"
+        }
+      ],
+      "extra_config": {
+        "github.com/devopsfaith/krakend-ratelimit/juju/router": {
+            "maxRate": 3,
+            "clientMaxRate": 1,
+            "strategy": "ip"
+          }
+      }
+    },
+    {
+      "endpoint": "/stubbed",
+      "headers_to_pass": ["Content-Length"],
+      "backend": [
+        {
+          "host": ["http://ignore.this.endpoint"],
+          "url_pattern": ""
+        }
+      ],
+      "extra_config": {
+        "github.com/devopsfaith/krakend/proxy": {
+          "static": {
+            "strategy": "always",
+            "data": {
+              "i-am-stubbed": {
+                  "id": 42,
+                  "bar": "foobar"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

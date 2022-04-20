@@ -1,0 +1,207 @@
+{
+  "info": {
+    "_postman_id": "d404cd00-e20a-4620-b385-507bb08f4b16",
+    "name": "KrakenD Demo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GraphQL",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query fruits {\n  fruits {\n    id\n    fruit_name\n    scientific_name\n  }\n}",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "{{URL}}/graphql",
+          "host": ["{{URL}}"],
+          "path": ["graphql"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Star Wars Auth",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{kl_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}/starwars/1",
+          "host": ["{{URL}}"],
+          "path": ["starwars", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GitHub - Merged Request",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}/github/user/johanaludden",
+          "host": ["{{URL}}"],
+          "path": ["github", "user", "johanaludden"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Products - Kubernetes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}/products/1",
+          "host": ["{{URL}}"],
+          "path": ["products", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Star Wars - Wildcard",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}/sw/films/5",
+          "host": ["{{URL}}"],
+          "path": ["sw", "films", "5"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "KrakenD - Stats",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}/stats",
+          "host": ["{{URL}}"],
+          "path": ["stats"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "KrakenD - Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}/__health",
+          "host": ["{{URL}}"],
+          "path": ["__health"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stubbed Backend",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}/stubbed",
+          "host": ["{{URL}}"],
+          "path": ["stubbed"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Sequential - Post & User",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Sequential - Posts API",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/posts/5",
+          "protocol": "https",
+          "host": ["jsonplaceholder", "typicode", "com"],
+          "path": ["posts", "5"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Sequential - Users API",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/users/5",
+          "protocol": "https",
+          "host": ["jsonplaceholder", "typicode", "com"],
+          "path": ["users", "5"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "SpaceX - Rate Limit",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}/rate-limit",
+          "host": ["{{URL}}"],
+          "path": ["rate-limit"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "URL",
+      "value": "krakend.kong-poc.kidsloop.live",
+      "type": "string"
+    },
+    {
+      "key": "kl_token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

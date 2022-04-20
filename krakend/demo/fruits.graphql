@@ -1,0 +1,7 @@
+query fruits {
+  fruits {
+    id
+    fruit_name
+    scientific_name
+  }
+}
