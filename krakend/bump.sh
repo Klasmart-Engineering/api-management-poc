@@ -1,4 +1,4 @@
-VERSION='0.0.71'
+VERSION='0.0.75'
 ECR_URL='246958245973.dkr.ecr.eu-west-2.amazonaws.com/krakend-enterprise'
 VERSION="$(echo $VERSION | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')"
 sed -i -e "1s/.*/VERSION='$VERSION'/" bump.sh

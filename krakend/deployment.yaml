@@ -17,7 +17,7 @@ spec:
       - name: krakend
         ports:
         - containerPort: 8080
-        image: 246958245973.dkr.ecr.eu-west-2.amazonaws.com/krakend-enterprise:0.0.71
+        image: 246958245973.dkr.ecr.eu-west-2.amazonaws.com/krakend-enterprise:0.0.75
         command: [ "/usr/bin/krakend-ee" ]
         args: [ "run", "-d", "-c", "/etc/krakend/krakend.json", "--accept-eula" , "-p", "8080" ]
         env:
